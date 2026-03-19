@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Karnataka State Audit and Accounts Department</title>
+<style>
+:root{--primary:#1a237e;--primary-light:#3949ab;--accent:#ff6f00;--bg:#f5f6fa;--card:#fff;--text:#212121;--text-light:#757575;--border:#e0e0e0;--success:#2e7d32;--danger:#c62828;--warning:#f57f17;--match:#6a1b9a;--info:#0277bd;--shadow:0 2px 12px rgba(0,0,0,.08)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+.header{background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;padding:1.25rem 2rem;box-shadow:0 4px 20px rgba(26,35,126,.3);position:sticky;top:0;z-index:100}
+.header-inner{display:flex;align-items:center;justify-content:center;gap:1rem}
+.header-logo{height:58px;width:auto;flex-shrink:0;display:block;border-radius:50%}
+.header-dept-logo{height:52px;width:auto;flex-shrink:0;display:block;opacity:.95}
+.header-text{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.header h1{font-size:1.5rem;font-weight:700;letter-spacing:-.3px}.header p{font-size:.82rem;opacity:.82;margin-top:.2rem}
+.site-footer{background:#f0f2f5;color:#555;text-align:center;padding:1.5rem 2rem;margin-top:2rem;display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;border-top:1px solid #dde1eb}
+.site-footer img{height:70px;width:auto;display:block;opacity:1}
+.site-footer span{font-size:.88rem;letter-spacing:.5px;color:#666;font-weight:500}
+.tabs{display:flex;background:#fff;border-bottom:2px solid var(--border);padding:0 2rem;box-shadow:var(--shadow)}
+.tab{padding:1rem 2rem;cursor:pointer;font-weight:600;font-size:.95rem;color:var(--text-light);border-bottom:3px solid transparent;transition:all .2s;user-select:none}
+.tab:hover{color:var(--primary)}.tab.active{color:var(--primary);border-bottom-color:var(--primary)}
+.tab.t-match.active{color:var(--match);border-bottom-color:var(--match)}.tab.t-analytics.active{color:var(--info);border-bottom-color:var(--info)}
+.prop-sub-tabs{display:flex;background:#fff;padding:.5rem 2rem;gap:.5rem;box-shadow:0 2px 8px rgba(0,0,0,.06);border-bottom:1px solid var(--border)}
+.fin-sub-tabs{display:flex;gap:.5rem;margin-bottom:1rem;padding:.5rem 0}
+.prop-st{padding:.55rem 1.4rem;border-radius:8px;cursor:pointer;font-size:.85rem;font-weight:600;color:var(--text-light);background:#f0f0f0;transition:all .15s;user-select:none}
+.prop-st:hover{background:#e0e0e0;color:var(--text)}
+.prop-st.active{background:var(--primary);color:#fff}
+.container{max-width:1500px;margin:0 auto;padding:1.5rem 2rem}.panel{display:none}.panel.active{display:block}
+.filter-bar{background:var(--card);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;box-shadow:var(--shadow);display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-end}
+.fg{flex:1;min-width:200px}
+.fg label{display:block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);margin-bottom:.4rem}
+.fg select{width:100%;padding:.65rem .9rem;border:2px solid var(--border);border-radius:8px;font-size:.9rem;background:#fff;color:var(--text);cursor:pointer;transition:border-color .2s;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23757575' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+.fg select:focus{outline:none;border-color:var(--primary)}.fg select:disabled{background:#f5f5f5;cursor:not-allowed}
+.btn{padding:.65rem 1.8rem;border:none;border-radius:8px;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .2s}
+.btn-p{background:var(--primary);color:#fff}.btn-p:hover{background:var(--primary-light)}.btn-p:disabled{background:#bdbdbd;cursor:not-allowed}
+.btn-m{background:var(--match);color:#fff}.btn-m:hover{background:#8e24aa}
+.btn-i{background:var(--info);color:#fff}.btn-i:hover{background:#01579b}
+.stats-bar{display:flex;gap:1rem;margin-bottom:1rem;flex-wrap:wrap}
+.sc{background:var(--card);border-radius:10px;padding:1rem 1.5rem;box-shadow:var(--shadow);flex:1;min-width:140px;border-left:4px solid var(--primary)}
+.sc .lb{font-size:.68rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);font-weight:700}
+.sc .vl{font-size:1.5rem;font-weight:800;color:var(--primary);margin-top:.2rem}
+.sc.a{border-left-color:var(--accent)}.sc.a .vl{color:var(--accent)}
+.sc.s{border-left-color:var(--success)}.sc.s .vl{color:var(--success)}
+.sc.d{border-left-color:var(--danger)}.sc.d .vl{color:var(--danger)}
+.sc.m{border-left-color:var(--match)}.sc.m .vl{color:var(--match)}
+.sc.w{border-left-color:var(--warning)}.sc.w .vl{color:var(--warning)}
+.sc.i{border-left-color:var(--info)}.sc.i .vl{color:var(--info)}
+.sc.mg{border-left-color:#e65100}.sc.mg .vl{color:#e65100}
+.sh{display:flex;align-items:center;gap:.75rem;margin:1.5rem 0 1rem;padding-bottom:.5rem;border-bottom:2px solid var(--border)}
+.sh h3{font-size:1.1rem;font-weight:700}
+.badge{display:inline-block;padding:.15rem .6rem;border-radius:20px;font-size:.75rem;font-weight:700;color:#fff}
+.bs{background:var(--success)}.bd{background:var(--danger)}.bw{background:var(--warning)}.bi{background:var(--info)}
+.sub-tabs{display:flex;gap:.5rem;margin-bottom:1rem}
+.st{padding:.5rem 1.2rem;border-radius:8px;cursor:pointer;font-size:.85rem;font-weight:600;background:#f0f0f0;color:var(--text-light);transition:all .15s}
+.st:hover{background:#e8e8e8}.st.as{background:var(--success);color:#fff}.st.ad{background:var(--danger);color:#fff}.st.aw{background:var(--warning);color:#fff}
+.tw{background:var(--card);border-radius:12px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:1.5rem}
+.ts{overflow-x:auto;max-height:55vh;overflow-y:auto}
+table{width:100%;border-collapse:collapse;font-size:.83rem}thead{position:sticky;top:0;z-index:10}
+th{background:var(--primary);color:#fff;padding:.75rem .9rem;text-align:left;font-weight:600;font-size:.75rem;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+td{padding:.6rem .9rem;border-bottom:1px solid #f0f0f0;max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+tr:hover td{background:#f8f9ff}tr:nth-child(even) td{background:#fafafa}tr:nth-child(even):hover td{background:#f0f1ff}
+.th-m th{background:var(--match)}.th-d th{background:var(--danger)}.th-w th{background:var(--warning)}.th-s th{background:var(--success)}.th-i th{background:var(--info)}
+.bar-row{display:flex;align-items:center;margin-bottom:.5rem;gap:.75rem}
+.bar-label{width:140px;font-size:.8rem;font-weight:600;text-align:right;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar-track{flex:1;height:28px;background:#f0f0f0;border-radius:6px;overflow:hidden}
+.bar-fill{height:100%;border-radius:6px;transition:width .6s;display:flex;align-items:center;padding-left:8px;font-size:.72rem;font-weight:700;color:#fff;min-width:fit-content}
+.bar-val{width:100px;font-size:.8rem;font-weight:700;text-align:right;flex-shrink:0}
+.donut-container{display:flex;gap:2rem;align-items:center;justify-content:center;padding:1.5rem;flex-wrap:wrap}
+.donut{width:160px;height:160px;border-radius:50%;position:relative;display:flex;align-items:center;justify-content:center}
+.donut-inner{width:100px;height:100px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column;position:absolute}
+.donut-inner .pct{font-size:1.5rem;font-weight:800}.donut-inner .ll{font-size:.65rem;color:var(--text-light);text-transform:uppercase}
+.dl{font-size:.85rem}.dl div{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem}
+.ldot{width:14px;height:14px;border-radius:3px;flex-shrink:0}
+.dg{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.75rem;margin-bottom:1.5rem}
+.dc{background:var(--card);border-radius:10px;padding:1rem;box-shadow:var(--shadow);text-align:center;border-top:3px solid var(--primary)}
+.dc .bk{font-size:.78rem;font-weight:700;color:var(--text-light)}.dc .ct{font-size:1.3rem;font-weight:800;color:var(--primary);margin:.3rem 0}.dc .am{font-size:.8rem;color:var(--danger);font-weight:600}
+/* MGNREGA styles */
+.mg-st{padding:.75rem 1.5rem;border-radius:8px 8px 0 0;cursor:pointer;font-size:.85rem;font-weight:600;background:#f5f5f5;color:var(--text-light);transition:all .15s;border:none;margin-top:.5rem}
+.mg-st:hover{background:#eeeeee}
+.mg-st.active-mg{background:#e65100;color:#fff}
+.bs-section{margin-bottom:1.5rem}
+.bs-section h4{font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+.bs-year-bar{display:flex;align-items:center;gap:1rem;margin-bottom:1rem;padding:.75rem 1rem;background:var(--card);border-radius:10px;box-shadow:var(--shadow)}
+.bs-year-bar label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-light)}
+.bs-year-bar select{padding:.5rem .9rem;border:2px solid #e65100;border-radius:8px;font-size:.88rem;font-weight:600;color:#e65100;background:#fff;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23e65100' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px}
+.bs-year-bar select:focus{outline:none;box-shadow:0 0 0 3px rgba(230,81,0,.15)}
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem}
+.chart-card{background:var(--card);border-radius:12px;box-shadow:var(--shadow);padding:1.25rem}
+.chart-card h4{font-size:.88rem;font-weight:700;margin-bottom:.75rem;color:var(--text);display:flex;align-items:center;gap:.5rem}
+.chart-card canvas{max-height:300px}
+@media(max-width:900px){.chart-grid{grid-template-columns:1fr}}
+.yoy-pos{color:var(--success);font-weight:700;font-size:.8rem}
+.yoy-neg{color:var(--danger);font-weight:700;font-size:.8rem}
+.yoy-neutral{color:var(--text-light);font-weight:600;font-size:.8rem}
+.info-tip{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,.3);border:1.5px solid rgba(255,255,255,.6);font-size:.7rem;font-weight:700;font-style:normal;cursor:help;vertical-align:middle;margin-left:4px;position:relative;color:#fff;line-height:1}
+.info-tip:hover{background:rgba(255,255,255,.5)}
+.info-tip .tip-text{visibility:hidden;opacity:0;position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:8px 12px;border-radius:6px;font-size:.75rem;font-weight:400;white-space:pre-line;min-width:220px;max-width:300px;z-index:999;box-shadow:0 4px 12px rgba(0,0,0,.3);line-height:1.5;text-transform:none;letter-spacing:0;transition:opacity .15s}
+.info-tip .tip-text::before{content:'';position:absolute;bottom:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-bottom-color:#333}
+.info-tip:hover .tip-text{visibility:visible;opacity:1}
+.breadcrumb{display:flex;align-items:center;gap:.5rem;margin-bottom:1rem;font-size:.85rem;color:var(--text-light)}
+.breadcrumb a{color:var(--primary);text-decoration:none;font-weight:600;cursor:pointer}
+.breadcrumb a:hover{text-decoration:underline}
+.pg{display:flex;justify-content:space-between;align-items:center;padding:.8rem 1.5rem;background:#fafafa;border-top:1px solid var(--border)}
+.pg span{font-size:.85rem;color:var(--text-light)}.pg .pb{display:flex;gap:.5rem}
+.pbtn{padding:.4rem 1rem;border:1px solid var(--border);border-radius:6px;background:#fff;cursor:pointer;font-size:.85rem;transition:all .15s}
+.pbtn:hover{border-color:var(--primary);color:var(--primary)}.pbtn:disabled{opacity:.4;cursor:not-allowed}
+.ld{text-align:center;padding:3rem;color:var(--text-light)}
+.sp{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 1rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+.es{text-align:center;padding:4rem 2rem;color:var(--text-light)}.es .icon{font-size:3rem;margin-bottom:1rem}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.cs{background:var(--card);border-radius:12px;box-shadow:var(--shadow);padding:1.5rem}
+.cs h4{font-size:.9rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+@media(max-width:1024px){.g2{grid-template-columns:1fr}}
+@media(max-width:768px){.header{padding:1rem}.header h1{font-size:1.2rem}.container{padding:1rem}.filter-bar{flex-direction:column}.fg{min-width:100%}.tabs{padding:0 .5rem;overflow-x:auto}.tab{padding:.8rem 1rem;font-size:.82rem;white-space:nowrap}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="header">
+    <div class="header-inner">
+        <img src="/static/deptlogo.jpeg" alt="Department Logo" class="header-logo">
+        <div class="header-text">
+            <h1>Karnataka State Audit and Accounts Department</h1>
+            <p>Property &amp; MGNREGA Audit &mdash; Data Explorer &amp; Analytics</p>
+        </div>
+        <img src="/static/Seal_of_Karnataka.svg" alt="Karnataka State Seal" class="header-dept-logo">
+    </div>
+</div>
+<div class="tabs">
+    <div class="tab active" onclick="switchSection('property')">Property</div>
+    <div class="tab" onclick="switchSection('finance')">MGNREGA</div>
+</div>
+<div class="prop-sub-tabs" id="prop-sub-bar">
+    <div class="prop-st active" data-panel="eswathu" onclick="switchTab('eswathu')">eSwathu</div>
+    <div class="prop-st" data-panel="panchatantra" onclick="switchTab('panchatantra')">Panchatantra</div>
+    <div class="prop-st" data-panel="match" onclick="switchTab('match')">Property Match</div>
+    <div class="prop-st" data-panel="analytics" onclick="switchTab('analytics')">Analytics from Panchatantra</div>
+</div>
+<div class="container">
+
+<!-- ESWATHU -->
+<div id="panel-eswathu" class="panel active">
+    <div class="filter-bar">
+        <div class="fg"><label>District</label><select id="e-d" onchange="eT()"><option value="">Select District</option></select></div>
+        <div class="fg"><label>Taluk</label><select id="e-t" onchange="eG()" disabled><option value="">Select Taluk</option></select></div>
+        <div class="fg"><label>Gram Panchayat</label><select id="e-g" disabled><option value="">Select GP</option></select></div>
+        <div class="fg"><label>Village (optional)</label><select id="e-v" disabled title="Village level data is not available in eSwathu"><option value="">Not available in eSwathu</option></select></div>
+        <div><button class="btn btn-p" onclick="eD(0)" id="e-btn" disabled>Search</button></div>
+    </div>
+    <div id="e-stats" class="stats-bar" style="display:none"></div>
+    <div id="e-res"></div>
+</div>
+
+<!-- PANCHATANTRA -->
+<div id="panel-panchatantra" class="panel">
+    <div class="filter-bar">
+        <div class="fg"><label>District</label><select id="p-d" onchange="pT()"><option value="">Select District</option></select></div>
+        <div class="fg"><label>Taluk</label><select id="p-t" onchange="pG()" disabled><option value="">Select Taluk</option></select></div>
+        <div class="fg"><label>Gram Panchayat</label><select id="p-g" onchange="pV()" disabled><option value="">Select GP</option></select></div>
+        <div class="fg"><label>Village (optional)</label><select id="p-v" disabled><option value="">All Villages</option></select></div>
+        <div><button class="btn btn-p" onclick="pD(0)" id="p-btn" disabled>Search</button></div>
+    </div>
+    <div id="p-stats" class="stats-bar" style="display:none"></div>
+    <div id="p-res"></div>
+</div>
+
+<!-- MATCH -->
+<div id="panel-match" class="panel">
+    <div class="filter-bar" style="border-left:4px solid var(--match)">
+        <div class="fg"><label>District (eSwathu)</label><select id="m-d" onchange="mT()"><option value="">Select District</option></select></div>
+        <div class="fg"><label>Taluk</label><select id="m-t" onchange="mG()" disabled><option value="">Select Taluk</option></select></div>
+        <div class="fg"><label>Gram Panchayat</label><select id="m-g" disabled><option value="">Select GP</option></select></div>
+        <div><button class="btn btn-m" onclick="runMatch()" id="m-btn" disabled>Analyse Match</button></div>
+    </div>
+    <div id="m-ov"></div>
+    <div id="m-st" class="sub-tabs" style="display:none"></div>
+    <div id="m-res"></div>
+</div>
+
+<!-- ANALYTICS -->
+<div id="panel-analytics" class="panel">
+    <div class="filter-bar" style="border-left:4px solid var(--info)">
+        <div class="fg"><label>District</label><select id="a-d" onchange="aT()"><option value="">Select District</option></select></div>
+        <div class="fg"><label>Taluk</label><select id="a-t" onchange="aG()" disabled><option value="">Select Taluk</option></select></div>
+        <div class="fg"><label>Gram Panchayat</label><select id="a-g" disabled><option value="">Select GP</option></select></div>
+        <div><button class="btn btn-i" onclick="loadAnalytics()" id="a-btn" disabled>Load Analytics</button></div>
+    </div>
+    <div id="a-res"></div>
+</div>
+
+<!-- FINANCE -->
+<div id="panel-mgnrega" class="panel">
+    <div class="fin-sub-tabs">
+        <div class="prop-st active" data-view="split" onclick="mgSwitchView('split')">Labour Material Split</div>
+        <div class="prop-st" data-view="balance" onclick="mgSwitchView('balance')">Balance Sheet &amp; Analysis</div>
+    </div>
+    <div class="filter-bar" style="border-left:4px solid #e65100">
+        <div class="fg"><label>District</label><select id="lm-d" onchange="lmDistrictChanged()"><option value="">Select District</option></select></div>
+        <div class="fg"><label>Financial Year</label><select id="lm-yr" onchange="lmDistrictChanged()" disabled><option value="">Select Year</option></select></div>
+        <div><button class="btn" style="background:#e65100;color:#fff" onclick="mgAnalyse()" id="lm-btn" disabled>Analyse</button></div>
+    </div>
+    <div id="mg-res"></div>
+</div>
+
+</div>
+<footer class="site-footer">
+    <span>Powered by</span>
+    <img src="/static/logo.png" alt="Konnectify Tech">
+</footer>
+<script>
+const $=id=>document.getElementById(id);
+const F=async u=>(await fetch(u)).json();
+function pop(sel,items,ph){sel.innerHTML=`<option value="">${ph}</option>`;items.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;sel.appendChild(o)});sel.disabled=false}
+const N=n=>Number(n||0).toLocaleString('en-IN');
+const C=n=>'₹'+Number(n||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
+const CL=n=>'₹'+Number(n||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2})+' L';
+const P=n=>Number(n||0).toFixed(1)+'%';
+function loading(el){el.innerHTML='<div class="ld"><div class="sp"></div>Loading data…</div>'}
+
+/* ═══ TAB ═══ */
+let _activeSection='property';
+let _activePropertyTab='eswathu';
+
+function switchSection(section){
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    const tabs=document.querySelectorAll('.tab');
+    if(section==='property'){tabs[0].classList.add('active');}
+    else{tabs[1].classList.add('active');}
+    _activeSection=section;
+    const subBar=$('prop-sub-bar');
+    if(section==='property'){
+        subBar.style.display='flex';
+        switchTab(_activePropertyTab);
+    } else {
+        subBar.style.display='none';
+        document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+        $('panel-mgnrega').classList.add('active');
+        document.querySelectorAll('.prop-st').forEach(s=>s.classList.remove('active'));
+        if(!window._mgInited){window._mgInited=true;initLM();}
+    }
+}
+
+function switchTab(name){
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    $('panel-'+name).classList.add('active');
+    document.querySelectorAll('.prop-st').forEach(s=>s.classList.remove('active'));
+    document.querySelector(`.prop-st[data-panel="${name}"]`).classList.add('active');
+    _activePropertyTab=name;
+    /* ensure Property top tab is highlighted */
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.tab')[0].classList.add('active');
+    $('prop-sub-bar').style.display='flex';
+    _activeSection='property';
+}
+
+/* ═══ ESWATHU ═══ */
+async function initE(){pop($('e-d'),await F('/api/eswathu/districts'),'Select District')}
+async function eT(){
+    const d=$('e-d').value,ts=$('e-t'),gs=$('e-g');
+    ts.innerHTML='<option>Select Taluk</option>';ts.disabled=true;
+    gs.innerHTML='<option>Select GP</option>';gs.disabled=true;$('e-btn').disabled=true;
+    if(!d)return;pop(ts,await F('/api/eswathu/taluks?district='+encodeURIComponent(d)),'Select Taluk');
+}
+async function eG(){
+    const d=$('e-d').value,t=$('e-t').value,gs=$('e-g');
+    gs.innerHTML='<option>Select GP</option>';gs.disabled=true;$('e-btn').disabled=true;
+    if(!t)return;pop(gs,await F(`/api/eswathu/gps?district=${encodeURIComponent(d)}&taluk=${encodeURIComponent(t)}`),'Select GP');
+    gs.onchange=()=>{$('e-btn').disabled=!gs.value};
+}
+async function eD(off){
+    const d=$('e-d').value,t=$('e-t').value,g=$('e-g').value;if(!g)return;
+    const el=$('e-res'),st=$('e-stats');loading(el);
+    const L=500,data=await F(`/api/eswathu/data?district=${encodeURIComponent(d)}&taluk=${encodeURIComponent(t)}&gp=${encodeURIComponent(g)}&limit=${L}&offset=${off}`);
+    st.style.display='flex';st.innerHTML=`<div class="sc"><div class="lb">Total Properties</div><div class="vl">${N(data.total)}</div></div><div class="sc a"><div class="lb">Showing</div><div class="vl">${N(data.data.length)}</div></div>`;
+    if(!data.data.length){el.innerHTML='<div class="es"><p>No properties found.</p></div>';return}
+    let h='<div class="tw"><div class="ts"><table><thead><tr><th>#</th><th>Property ID</th><th>Asset Number</th><th>Classification</th><th>Owners</th><th>Form Type</th></tr></thead><tbody>';
+    data.data.forEach((r,i)=>{h+=`<tr><td>${off+i+1}</td><td>${r.property_id}</td><td>${r.asset_number}</td><td>${r.property_classification}</td><td title="${r.owners}">${r.owners}</td><td><span class="badge ${r.form_type==='Form 11-B'?'bi':'bs'}">${r.form_type||'Form 9'}</span></td></tr>`});
+    h+='</tbody></table></div>';
+    const tp=Math.ceil(data.total/L),cp=Math.floor(off/L)+1;
+    h+=`<div class="pg"><span>Page ${cp}/${tp} (${N(data.total)})</span><div class="pb"><button class="pbtn" onclick="eD(${off-L})" ${off<=0?'disabled':''}>← Prev</button><button class="pbtn" onclick="eD(${off+L})" ${off+L>=data.total?'disabled':''}>Next →</button></div></div></div>`;
+    el.innerHTML=h;
+}
+
+/* ═══ PANCHATANTRA ═══ */
+async function initP(){pop($('p-d'),await F('/api/panchatantra/districts'),'Select District')}
+async function pT(){
+    const d=$('p-d').value,ts=$('p-t'),gs=$('p-g'),vs=$('p-v');
+    ts.innerHTML='<option>Select Taluk</option>';ts.disabled=true;
+    gs.innerHTML='<option>Select GP</option>';gs.disabled=true;
+    vs.innerHTML='<option>All Villages</option>';vs.disabled=true;$('p-btn').disabled=true;
+    if(!d)return;pop(ts,await F('/api/panchatantra/taluks?district='+encodeURIComponent(d)),'Select Taluk');
+}
+async function pG(){
+    const d=$('p-d').value,t=$('p-t').value,gs=$('p-g'),vs=$('p-v');
+    gs.innerHTML='<option>Select GP</option>';gs.disabled=true;
+    vs.innerHTML='<option>All Villages</option>';vs.disabled=true;$('p-btn').disabled=true;
+    if(!t)return;pop(gs,await F(`/api/panchatantra/gps?district=${encodeURIComponent(d)}&taluk=${encodeURIComponent(t)}`),'Select GP');
+}
+async function pV(){
+    const d=$('p-d').value,t=$('p-t').value,g=$('p-g').value,vs=$('p-v');
+    vs.innerHTML='<option value="">All Villages</option>';vs.disabled=true;$('p-btn').disabled=!g;
+    if(!g)return;pop(vs,await F(`/api/panchatantra/villages?district=${encodeURIComponent(d)}&taluk=${encodeURIComponent(t)}&gp=${encodeURIComponent(g)}`),'All Villages');
+}
+async function pD(off){
+    const d=$('p-d').value,t=$('p-t').value,g=$('p-g').value,v=$('p-v').value;if(!g)return;
+    const el=$('p-res'),st=$('p-stats');loading(el);
+    const L=500;let url=`/api/panchatantra/data?district=${encodeURIComponent(d)}&taluk=${encodeURIComponent(t)}&gp=${encodeURIComponent(g)}&limit=${L}&offset=${off}`;
+    if(v)url+='&village='+encodeURIComponent(v);
+    const data=await F(url);
+    st.style.display='flex';st.innerHTML=`<div class="sc"><div class="lb">Total Properties</div><div class="vl">${N(data.total)}</div></div><div class="sc a"><div class="lb">Showing</div><div class="vl">${N(data.data.length)}</div></div>`;
+    if(!data.data.length){el.innerHTML='<div class="es"><p>No properties found.</p></div>';return}
+    let h='<div class="tw"><div class="ts"><table><thead><tr><th>#</th><th>Property ID</th><th>Prop No.</th><th>Owner</th><th>Village</th><th>Cur. Demand</th><th>Arrears</th><th>Total Demand</th><th>Collection</th><th>Balance</th></tr></thead><tbody>';
+    data.data.forEach((r,i)=>{h+=`<tr><td>${off+i+1}</td><td>${r.property_id}</td><td>${r.property_number}</td><td title="${r.property_owner_name}">${r.property_owner_name}</td><td>${r.village_code}</td><td>${C(r.current_demand)}</td><td>${C(r.arrears)}</td><td>${C(r.total_demand)}</td><td>${C(r.total_demand_collection)}</td><td>${C(r.total_balance)}</td></tr>`});
+    h+='</tbody></table></div>';
+    const tp=Math.ceil(data.total/L),cp=Math.floor(off/L)+1;
+    h+=`<div class="pg"><span>Page ${cp}/${tp} (${N(data.total)})</span><div class="pb"><button class="pbtn" onclick="pD(${off-L})" ${off<=0?'disabled':''}>← Prev</button><button class="pbtn" onclick="pD(${off+L})" ${off+L>=data.total?'disabled':''}>Next →</button></div></div></div>`;
+    el.innerHTML=h;
+}
+
+/* ═══ MATCH ═══ */
+let MS={};
+async function initM(){pop($('m-d'),await F('/api/eswathu/districts'),'Select District')}
+async function mT(){
+    const d=$('m-d').value,ts=$('m-t'),gs=$('m-g');
+    ts.innerHTML='<option>Select Taluk</option>';ts.disabled=true;gs.innerHTML='<option>Select GP</option>';gs.disabled=true;$('m-btn').disabled=true;
+    $('m-ov').innerHTML='';$('m-st').style.display='none';$('m-res').innerHTML='';
+    if(!d)return;pop(ts,await F('/api/eswathu/taluks?district='+encodeURIComponent(d)),'Select Taluk');
+}
+async function mG(){
+    const d=$('m-d').value,t=$('m-t').value,gs=$('m-g');
+    gs.innerHTML='<option>Select GP</option>';gs.disabled=true;$('m-btn').disabled=true;
+    if(!t)return;pop(gs,await F(`/api/eswathu/gps?district=${encodeURIComponent(d)}&taluk=${encodeURIComponent(t)}`),'Select GP');
+    gs.onchange=()=>{$('m-btn').disabled=!gs.value};
+}
+
+async function runMatch(){
+    const d=$('m-d').value,t=$('m-t').value,g=$('m-g').value;if(!g)return;
+    MS={d,t,g};
+    const ov=$('m-ov'),stab=$('m-st'),res=$('m-res');loading(ov);stab.style.display='none';res.innerHTML='';
+
+    const s=await F(`/api/analytics/match_summary?district=${encodeURIComponent(d)}&taluk=${encodeURIComponent(t)}&gp=${encodeURIComponent(g)}`);
+    const tot=s.eswathu_total+s.only_in_panchatantra;
+    const panch_total=s.matched+s.only_in_panchatantra;
+    const mPct=tot>0?(s.matched/tot*100).toFixed(1):0;
+    const ePct=tot>0?(s.only_in_eswathu/tot*100).toFixed(1):0;
+    const pPct=tot>0?(s.only_in_panchatantra/tot*100).toFixed(1):0;
+
+    const seg1=s.matched/(tot||1)*360,seg2=seg1+s.only_in_eswathu/(tot||1)*360;
+    const grad=`conic-gradient(var(--success) 0deg ${seg1}deg,var(--danger) ${seg1}deg ${seg2}deg,var(--warning) ${seg2}deg 360deg)`;
+
+    let h=`<div class="stats-bar">
+        <div class="sc"><div class="lb">eSwathu Properties</div><div class="vl">${N(s.eswathu_total)}</div></div>
+        <div class="sc i"><div class="lb">Panchatantra Properties</div><div class="vl">${N(panch_total)}</div></div>
+        <div class="sc s"><div class="lb">Common Properties</div><div class="vl">${N(s.matched)}</div></div>
+        <div class="sc d"><div class="lb">Only in eSwathu</div><div class="vl">${N(s.only_in_eswathu)}</div></div>
+        <div class="sc w"><div class="lb">Only in Panchatantra</div><div class="vl">${N(s.only_in_panchatantra)}</div></div>
+        <div class="sc m"><div class="lb">Match Rate</div><div class="vl">${P(s.match_rate)}</div></div>
+    </div>
+    <div class="g2">
+        <div class="cs"><h4>Property Distribution</h4>
+            <div class="donut-container">
+                <div class="donut" style="background:${grad}"><div class="donut-inner"><div class="pct">${N(tot)}</div><div class="ll">Total</div></div></div>
+                <div class="dl">
+                    <div><div class="ldot" style="background:var(--success)"></div><strong>${N(s.matched)}</strong> Matched (${mPct}%)</div>
+                    <div><div class="ldot" style="background:var(--danger)"></div><strong>${N(s.only_in_eswathu)}</strong> Missing from Panchatantra (${ePct}%)</div>
+                    <div><div class="ldot" style="background:var(--warning)"></div><strong>${N(s.only_in_panchatantra)}</strong> Missing from eSwathu (${pPct}%)</div>
+                </div>
+            </div>
+        </div>
+        <div class="cs"><h4>Unmatched Financial Impact</h4>
+            <p style="color:var(--text-light);font-size:.85rem;margin-bottom:1rem">Properties in Panchatantra but NOT in eSwathu — potential unregistered properties with dues:</p>
+            <div class="stats-bar">
+                <div class="sc d"><div class="lb">Unmatched Arrears</div><div class="vl" style="font-size:1.2rem">${C(s.unmatched_financials.unmatched_arrears)}</div></div>
+                <div class="sc w"><div class="lb">Unmatched Demand</div><div class="vl" style="font-size:1.2rem">${C(s.unmatched_financials.unmatched_demand)}</div></div>
+                <div class="sc i"><div class="lb">Unmatched Balance</div><div class="vl" style="font-size:1.2rem">${C(s.unmatched_financials.unmatched_balance)}</div></div>
+            </div>
+        </div>
+    </div>`;
+    ov.innerHTML=h;
+
+    stab.style.display='flex';
+    stab.innerHTML=`
+        <div class="st as" onclick="showMS('matched',this)">Matched (${N(s.matched)})</div>
+        <div class="st" onclick="showMS('only_e',this)">Missing from Panchatantra (${N(s.only_in_eswathu)})</div>
+        <div class="st" onclick="showMS('only_p',this)">Missing from eSwathu (${N(s.only_in_panchatantra)})</div>`;
+    showMS('matched',stab.children[0]);
+}
+
+function showMS(view,el){
+    document.querySelectorAll('#m-st .st').forEach(t=>t.className='st');
+    if(view==='matched')el.classList.add('as');else if(view==='only_e')el.classList.add('ad');else el.classList.add('aw');
+    loadMS(view,0);
+}
+
+async function loadMS(view,off){
+    const{d,t,g}=MS,el=$('m-res');loading(el);const L=500;
+    if(view==='matched'){
+        const data=await F(`/api/match?district=${encodeURIComponent(d)}&taluk=${encodeURIComponent(t)}&gp=${encodeURIComponent(g)}&limit=${L}&offset=${off}`);
+        if(!data.data.length){el.innerHTML='<div class="es"><p>No matched properties.</p></div>';return}
+        let h=`<div class="sh"><h3>Properties Found in Both Datasets</h3><span class="badge bs">${N(data.total_matched)} matched</span></div>`;
+        h+='<div class="tw"><div class="ts"><table class="th-s"><thead><tr><th>#</th><th>Property ID</th><th>Asset No.</th><th>Classification</th><th>eSwathu Owner</th><th>Panch. Owner</th><th>Village</th><th>Total Demand</th><th>Balance</th></tr></thead><tbody>';
+        data.data.forEach((r,i)=>{h+=`<tr><td>${off+i+1}</td><td>${r.property_id}</td><td>${r.asset_number}</td><td>${r.property_classification}</td><td title="${r.eswathu_owners}">${r.eswathu_owners}</td><td title="${r.panchatantra_owner}">${r.panchatantra_owner}</td><td>${r.village_code}</td><td>${C(r.total_demand)}</td><td>${C(r.total_balance)}</td></tr>`});
+        h+='</tbody></table></div>';
+        const tp=Math.ceil(data.total_matched/L),cp=Math.floor(off/L)+1;
+        h+=`<div class="pg"><span>Page ${cp}/${tp} (${N(data.total_matched)})</span><div class="pb"><button class="pbtn" onclick="loadMS('matched',${off-L})" ${off<=0?'disabled':''}>← Prev</button><button class="pbtn" onclick="loadMS('matched',${off+L})" ${off+L>=data.total_matched?'disabled':''}>Next →</button></div></div></div>`;
+        el.innerHTML=h;
+    }else if(view==='only_e'){
+        const data=await F(`/api/match/missing?district=${encodeURIComponent(d)}&taluk=${encodeURIComponent(t)}&gp=${encodeURIComponent(g)}&source=eswathu&limit=${L}&offset=${off}`);
+        if(!data.data.length){el.innerHTML='<div class="es"><p>All eSwathu properties are matched in Panchatantra!</p></div>';return}
+        let h=`<div class="sh"><h3>In eSwathu but Missing from Panchatantra</h3><span class="badge bd">${N(data.total)} missing</span></div>`;
+        h+='<p style="color:var(--text-light);font-size:.85rem;margin-bottom:1rem">These properties have eSwathu registration but no corresponding tax record in Panchatantra.</p>';
+        h+='<div class="tw"><div class="ts"><table class="th-d"><thead><tr><th>#</th><th>Property ID</th><th>Asset Number</th><th>Classification</th><th>Owners</th></tr></thead><tbody>';
+        data.data.forEach((r,i)=>{h+=`<tr><td>${off+i+1}</td><td>${r.property_id}</td><td>${r.asset_number}</td><td>${r.property_classification}</td><td title="${r.owners}">${r.owners}</td></tr>`});
+        h+='</tbody></table></div>';
+        const tp=Math.ceil(data.total/L),cp=Math.floor(off/L)+1;
+        h+=`<div class="pg"><span>Page ${cp}/${tp} (${N(data.total)})</span><div class="pb"><button class="pbtn" onclick="loadMS('only_e',${off-L})" ${off<=0?'disabled':''}>← Prev</button><button class="pbtn" onclick="loadMS('only_e',${off+L})" ${off+L>=data.total?'disabled':''}>Next →</button></div></div></div>`;
+        el.innerHTML=h;
+    }else{
+        const data=await F(`/api/match/missing?district=${encodeURIComponent(d)}&taluk=${encodeURIComponent(t)}&gp=${encodeURIComponent(g)}&source=panchatantra&limit=${L}&offset=${off}`);
+        if(!data.data.length){el.innerHTML='<div class="es"><p>All Panchatantra properties are matched in eSwathu!</p></div>';return}
+        let h=`<div class="sh"><h3>In Panchatantra but Missing from eSwathu</h3><span class="badge bw">${N(data.total)} missing</span></div>`;
+        h+='<p style="color:var(--text-light);font-size:.85rem;margin-bottom:1rem">These properties have tax records but no eSwathu registration — potentially unregistered.</p>';
+        h+='<div class="tw"><div class="ts"><table class="th-w"><thead><tr><th>#</th><th>Property ID</th><th>Prop No.</th><th>Owner</th><th>Village</th><th>Total Demand</th><th>Arrears</th><th>Balance</th></tr></thead><tbody>';
+        data.data.forEach((r,i)=>{h+=`<tr><td>${off+i+1}</td><td>${r.property_id}</td><td>${r.property_number}</td><td title="${r.property_owner_name}">${r.property_owner_name}</td><td>${r.village_code}</td><td>${C(r.total_demand)}</td><td>${C(r.arrears)}</td><td>${C(r.total_balance)}</td></tr>`});
+        h+='</tbody></table></div>';
+        const tp=Math.ceil(data.total/L),cp=Math.floor(off/L)+1;
+        h+=`<div class="pg"><span>Page ${cp}/${tp} (${N(data.total)})</span><div class="pb"><button class="pbtn" onclick="loadMS('only_p',${off-L})" ${off<=0?'disabled':''}>← Prev</button><button class="pbtn" onclick="loadMS('only_p',${off+L})" ${off+L>=data.total?'disabled':''}>Next →</button></div></div></div>`;
+        el.innerHTML=h;
+    }
+}
+
+/* ═══ ANALYTICS ═══ */
+let _anaState={};
+async function initA(){pop($('a-d'),await F('/api/panchatantra/districts'),'Select District')}
+async function aT(){
+    const d=$('a-d').value,ts=$('a-t'),gs=$('a-g');
+    ts.innerHTML='<option>Select Taluk</option>';ts.disabled=true;gs.innerHTML='<option>Select GP</option>';gs.disabled=true;$('a-btn').disabled=true;
+    if(!d)return;pop(ts,await F('/api/panchatantra/taluks?district='+encodeURIComponent(d)),'Select Taluk');
+}
+async function aG(){
+    const d=$('a-d').value,t=$('a-t').value,gs=$('a-g');
+    gs.innerHTML='<option>Select GP</option>';gs.disabled=true;$('a-btn').disabled=true;
+    if(!t)return;pop(gs,await F(`/api/panchatantra/gps?district=${encodeURIComponent(d)}&taluk=${encodeURIComponent(t)}`),'Select GP');
+    gs.onchange=()=>{$('a-btn').disabled=!gs.value};
+}
+
+async function loadAnalytics(){
+    const d=$('a-d').value,t=$('a-t').value,g=$('a-g').value;if(!g)return;
+    _anaState={d,t,g};
+    const el=$('a-res');loading(el);
+    const data=await F(`/api/analytics/gp_summary?district=${encodeURIComponent(d)}&taluk=${encodeURIComponent(t)}&gp=${encodeURIComponent(g)}`);
+    const s=data.gp_summary;
+    let h=`<div class="stats-bar">
+        <div class="sc"><div class="lb">Total Properties</div><div class="vl">${N(s.total_properties)}</div></div>
+        <div class="sc d"><div class="lb">Total Arrears</div><div class="vl">${C(s.total_arrears)}</div></div>
+        <div class="sc a"><div class="lb">Total Demand</div><div class="vl">${C(s.total_demand)}</div></div>
+        <div class="sc s"><div class="lb">Total Collection</div><div class="vl">${C(s.total_collection)}</div></div>
+        <div class="sc i"><div class="lb">Collection Rate</div><div class="vl">${P(data.collection_rate)}</div></div>
+        <div class="sc w"><div class="lb">Defaulters</div><div class="vl">${N(s.defaulters_count)}</div></div>
+    </div>`;
+
+    /* arrears distribution */
+    h+=`<div class="sh"><h3>Arrears Distribution</h3></div><div class="dg">`;
+    const clr=['var(--success)','var(--info)','var(--primary)','var(--accent)','var(--warning)','var(--danger)'];
+    data.arrears_distribution.forEach((b,i)=>{
+        h+=`<div class="dc" style="border-top-color:${clr[i%6]}"><div class="bk">${b.bucket}</div><div class="ct">${N(b.count)}</div><div class="am">${C(b.total_arrears)}</div></div>`;
+    });
+    h+='</div>';
+
+    /* defaulters placeholder */
+    h+='<div id="a-defaulters"></div>';
+    el.innerHTML=h;
+    loadDefaulters(0);
+}
+
+async function loadDefaulters(off){
+    const{d,t,g}=_anaState;if(!g)return;
+    const el=$('a-defaulters');loading(el);
+    const L=50;
+    const data=await F(`/api/analytics/defaulters?district=${encodeURIComponent(d)}&taluk=${encodeURIComponent(t)}&gp=${encodeURIComponent(g)}&limit=${L}&offset=${off}`);
+    if(!data.total){el.innerHTML='<div class="es"><p>No properties with arrears in this Gram Panchayat.</p></div>';return}
+    let h=`<div class="sh"><h3>All Properties by Arrears (Highest to Lowest)</h3><span class="badge bd">${N(data.total)} with arrears</span></div>`;
+    h+='<div class="tw"><div class="ts"><table class="th-d"><thead><tr><th>#</th><th>Property ID</th><th>Prop No.</th><th>Owner</th><th>Village Code</th><th>Arrears</th><th>Total Demand</th><th>Collection</th><th>Balance</th></tr></thead><tbody>';
+    data.data.forEach((r,i)=>{
+        h+=`<tr><td>${off+i+1}</td><td>${r.property_id}</td><td>${r.property_number||'—'}</td><td title="${r.property_owner_name}">${r.property_owner_name}</td><td>${r.village_code}</td><td style="color:var(--danger);font-weight:800">${C(r.arrears)}</td><td>${C(r.total_demand)}</td><td>${C(r.total_demand_collection)}</td><td>${C(r.total_balance)}</td></tr>`;
+    });
+    h+='</tbody></table></div>';
+    const tp=Math.ceil(data.total/L),cp=Math.floor(off/L)+1;
+    h+=`<div class="pg"><span>Page ${cp} of ${tp} &mdash; ${N(data.total)} properties with arrears</span><div class="pb"><button class="pbtn" onclick="loadDefaulters(${off-L})" ${off<=0?'disabled':''}>← Prev</button><button class="pbtn" onclick="loadDefaulters(${off+L})" ${off+L>=data.total?'disabled':''}>Next →</button></div></div></div>`;
+    el.innerHTML=h;
+}
+
+/* ═══ LABOUR MATERIAL SPLIT ═══ */
+let mgState={view:'district',block:null,district:null};
+let mgActiveView='split'; // 'split' or 'balance'
+let _bsData=null; // cached balance sheet data
+let _bsCharts={}; // chart instances for cleanup
+
+function destroyBSCharts(){
+    Object.values(_bsCharts).forEach(c=>{try{c.destroy()}catch(e){}});
+    _bsCharts={};
+}
+
+function mgSwitchView(v){
+    mgActiveView=v;
+    document.querySelectorAll('.fin-sub-tabs .prop-st').forEach(t=>t.classList.toggle('active',t.dataset.view===v));
+    destroyBSCharts();
+    $('mg-res').innerHTML='';
+    // re-analyse if district selected
+    if($('lm-d').value)mgAnalyse();
+}
+function mgAnalyse(){
+    if(mgActiveView==='split')loadLMAnalysis();
+    else loadBalanceSheet();
+}
+
+async function initLM(){
+    const [districts,years]=await Promise.all([F('/api/mgnrega/districts'),F('/api/mgnrega/years')]);
+    pop($('lm-d'),districts,'Select District');
+    pop($('lm-yr'),years,'Select Year');
+    // pre-select latest year
+    const yrSel=$('lm-yr');
+    if(yrSel.options.length>1)yrSel.selectedIndex=yrSel.options.length-1;
+}
+function lmDistrictChanged(){
+    const yr=$('lm-yr');
+    yr.disabled=false;
+    $('lm-btn').disabled=!($('lm-d').value&&$('lm-yr').value);
+    $('mg-res').innerHTML='';
+}
+async function loadLMAnalysis(){
+    const dist=$('lm-d').value,yr=$('lm-yr').value;if(!dist||!yr)return;
+    const el=$('mg-res');loading(el);
+    const data=await F('/api/mgnrega/district_summary?district='+encodeURIComponent(dist)+'&year='+encodeURIComponent(yr));
+    mgState={view:'district',data,district:dist,year:yr};
+    renderMGDistrictView(data);
+}
+
+function renderMGDistrictView(d){
+    const el=$('mg-res');
+    const wOk=d.wage_pct>=60;
+    const mOk=d.material_pct<=40;
+
+    let h=`<div class="breadcrumb"><strong>${d.district} District</strong> &mdash; Labour &amp; Material Expenditure Split Analysis &mdash; <strong>${mgState.year||''}</strong></div>`;
+
+    h+=`<div class="stats-bar">
+        <div class="sc mg"><div class="lb">Total Expenditure</div><div class="vl">${CL(d.total_expenditure)}</div></div>
+        <div class="sc ${wOk?'s':'d'}"><div class="lb">Labour Share</div><div class="vl">${d.wage_pct}%</div></div>
+        <div class="sc ${mOk?'s':'d'}"><div class="lb">Material Share</div><div class="vl">${d.material_pct}%</div></div>
+        <div class="sc"><div class="lb">Labour Amount</div><div class="vl">${CL(d.wage_total)}</div></div>
+        <div class="sc"><div class="lb">Material Amount</div><div class="vl">${CL(d.material_total)}</div></div>
+        <div class="sc"><div class="lb">Gram Panchayats</div><div class="vl">${d.gp_count}</div></div>
+    </div>`;
+
+    // Block summary table
+    const totalViolations=d.blocks.reduce((s,b)=>s+(b.gp_violations||0),0);
+    h+=`<div class="sh"><h3>Block-wise Analysis</h3><span class="badge bi">${d.blocks.length} blocks</span>${totalViolations>0?`<span class="badge bd" style="margin-left:.5rem">${totalViolations} GP violations</span>`:''}</div>`;
+    h+=`<div class="tw"><div class="ts"><table><thead class="th-i"><tr><th>Block</th><th>GPs</th><th>Labour % <span class="info-tip">i<span class="tip-text">Labour = Unskilled Wages + Semi-skilled Wages\nNorm: Minimum 60% of Total Expenditure</span></span></th><th>Material % <span class="info-tip">i<span class="tip-text">Material = Material Cost + Tax\nNorm: Maximum 40% of Total Expenditure</span></span></th><th>Labour Amount <span class="info-tip">i<span class="tip-text">Unskilled Wages + Semi-skilled Wages\n(Amount in Lakhs)</span></span></th><th>Material Amount <span class="info-tip">i<span class="tip-text">Material Cost + Tax\n(Amount in Lakhs)</span></span></th><th>Total Expenditure</th><th>Violations <span class="info-tip">i<span class="tip-text">Number of GPs in this block where\nLabour % is below the 60% norm</span></span></th></tr></thead><tbody>`;
+    d.blocks.forEach(b=>{
+        const rowBg=b.compliant?'':'background:#fff5f5';
+        h+=`<tr style="cursor:pointer;${rowBg}" onclick="drillToBlock('${b.block.replace(/'/g,"\\\\'")}')">
+            <td><strong>${b.block}</strong></td><td>${b.gp_count}</td>
+            <td style="color:${b.compliant?'var(--success)':'var(--danger)'};font-weight:800">${b.wage_pct}%</td>
+            <td style="color:${b.material_pct<=40?'var(--success)':'var(--danger)'};font-weight:800">${b.material_pct}%</td>
+            <td>${CL(b.wage_amount)}</td><td>${CL(b.material_amount)}</td><td>${CL(b.total_expenditure)}</td>
+            <td style="text-align:center;font-weight:700;color:${(b.gp_violations||0)>0?'var(--danger)':'var(--success)'}">${b.gp_violations||0}</td>
+        </tr>`;
+    });
+    h+=`</tbody></table></div></div>`;
+    h+=`<div style="font-size:.75rem;color:var(--text-light);margin-top:.5rem">Click any block row to drill down to Gram Panchayat level →</div>`;
+    el.innerHTML=h;
+}
+
+async function drillToBlock(block){
+    const el=$('mg-res');loading(el);
+    const yr=mgState.year||'';
+    const data=await F('/api/mgnrega/block_detail?block='+encodeURIComponent(block)+'&year='+encodeURIComponent(yr));
+    mgState.view='block';mgState.block=block;
+    renderMGBlockView(data);
+}
+
+function renderMGBlockView(d){
+    const el=$('mg-res');
+    const bOk=d.block_wage_pct>=60;
+    const distName=mgState.district||'District';
+
+    let h=`<div class="breadcrumb"><a onclick="loadLMAnalysis()">${distName} (${mgState.year||''})</a> <span>›</span> <strong>${d.block}</strong></div>`;
+
+    h+=`<div class="stats-bar">
+        <div class="sc mg"><div class="lb">Block Expenditure</div><div class="vl">${CL(d.block_total_expenditure)}</div></div>
+        <div class="sc ${bOk?'s':'d'}"><div class="lb">Labour Share</div><div class="vl">${d.block_wage_pct}%</div></div>
+        <div class="sc ${d.block_material_pct<=40?'s':'d'}"><div class="lb">Material Share</div><div class="vl">${d.block_material_pct}%</div></div>
+        <div class="sc"><div class="lb">Total GPs</div><div class="vl">${d.total_gps}</div></div>
+        <div class="sc s"><div class="lb">GPs ≥ 60%</div><div class="vl">${d.compliant_count}</div></div>
+        <div class="sc d"><div class="lb">GPs < 60%</div><div class="vl">${d.violators}</div></div>
+    </div>`;
+
+    // Complete GP detail table
+    h+=`<div class="sh"><h3>Complete GP Detail</h3></div>`;
+    h+=`<div class="tw"><div class="ts"><table><thead><tr><th>Gram Panchayat</th><th>Labour % <span class="info-tip">i<span class="tip-text">(Unskilled + Semi-skilled) ÷ Total Expenditure × 100\nNorm: ≥ 60%</span></span></th><th>Material % <span class="info-tip">i<span class="tip-text">(Material + Tax) ÷ Total Expenditure × 100\nNorm: ≤ 40%</span></span></th><th>Unskilled <span class="info-tip">i<span class="tip-text">Unskilled labour wages (in Lakhs)\nPart of Labour cost</span></span></th><th>Semi-skilled <span class="info-tip">i<span class="tip-text">Semi-skilled labour wages (in Lakhs)\nPart of Labour cost</span></span></th><th>Material <span class="info-tip">i<span class="tip-text">Material expenditure (in Lakhs)\nPart of Material cost</span></span></th><th>Tax <span class="info-tip">i<span class="tip-text">Tax expenditure (in Lakhs)\nPart of Material cost</span></span></th><th>Total Exp</th><th>Availability</th><th>Balance</th><th>Pending Wages</th></tr></thead><tbody>`;
+    d.gps.forEach(g=>{
+        const bg=g.compliant?'':'background:#fff5f5';
+        h+=`<tr style="${bg}">
+            <td><strong>${g.panchayat}</strong></td>
+            <td style="color:${g.compliant?'var(--success)':'var(--danger)'};font-weight:800">${g.wage_pct}%</td>
+            <td style="color:${g.material_pct<=40?'var(--success)':'var(--danger)'};font-weight:800">${g.material_pct}%</td>
+            <td>${CL(g.exp_unskilled_wage)}</td>
+            <td>${CL(g.exp_semiskilled_wage)}</td>
+            <td>${CL(g.exp_material)}</td>
+            <td>${CL(g.exp_tax)}</td>
+            <td><strong>${CL(g.total_expenditure)}</strong></td>
+            <td>${CL(g.total_availability)}</td>
+            <td>${CL(g.balance)}</td>
+            <td style="color:var(--warning)">${CL(g.payment_due_unskilled)}</td>
+        </tr>`;    });
+    h+=`</tbody></table></div></div>`;
+    el.innerHTML=h;
+}
+
+/* ═══ BALANCE SHEET & ANALYSIS ═══ */
+async function loadBalanceSheet(){
+    const dist=$('lm-d').value;if(!dist)return;
+    const el=$('mg-res');loading(el);
+    const data=await F('/api/mgnrega/balance_sheet?district='+encodeURIComponent(dist));
+    renderBalanceSheet(data);
+}
+
+function yoyBadge(val,suffix='',invert=false){
+    if(val===null||val===undefined)return '';
+    const pos=invert?(val<0):(val>0);
+    const neg=invert?(val>0):(val<0);
+    const arrow=val>0?'▲':val<0?'▼':'–';
+    const cls=pos?'yoy-pos':neg?'yoy-neg':'yoy-neutral';
+    const formatted=suffix==='%'?Math.abs(val).toFixed(1)+'%':CL(Math.abs(val));
+    return `<span class="${cls}" title="Year-over-year change">${arrow} ${formatted}</span>`;
+}
+
+function renderBalanceSheet(data){
+    _bsData=data;
+    const el=$('mg-res');
+    const years=data.years;
+    if(!years.length){el.innerHTML='<div class="es"><p>No balance sheet data available.</p></div>';return}
+
+    const yearKeys=Object.keys(data.blocks_by_year).sort();
+    const defaultYr=yearKeys[yearKeys.length-1]; // latest year
+
+    let h=`<div class="breadcrumb"><strong>${data.district} District</strong> &mdash; Balance Sheet &amp; Year-wise Analysis</div>`;
+
+    // === Year dropdown ===
+    h+=`<div class="bs-year-bar"><label>Financial Year</label><select id="bs-yr" onchange="bsYearChanged()">`;
+    yearKeys.forEach(yr=>{
+        h+=`<option value="${yr}" ${yr===defaultYr?'selected':''}>${yr}</option>`;
+    });
+    h+=`</select>`;
+    if(yearKeys.length>1) h+=`<span style="font-size:.78rem;color:var(--text-light)">${yearKeys.length} years available</span>`;
+    h+=`</div>`;
+
+    // === Summary stats placeholder (filled per year) ===
+    h+=`<div id="bs-stats"></div>`;
+
+    // === Year-wise comparison table (always show all years) ===
+    h+=`<div class="bs-section"><h4><span style="color:#e65100">&#9654;</span> Year-wise Fund Overview</h4>`;
+    h+=`<div class="tw"><div class="ts"><table><thead class="th-i"><tr>
+        <th>Year</th>
+        <th>Total Released <span class="info-tip">i<span class="tip-text">Total funds made available\n(Opening Balance + Received)</span></span></th>
+        <th>Total Utilisation <span class="info-tip">i<span class="tip-text">Total expenditure incurred\n(Labour + Material + Admin)</span></span></th>
+        <th>Balance / Unspent <span class="info-tip">i<span class="tip-text">Released − Utilisation\nFunds remaining unspent</span></span></th>
+        <th>Utilisation %</th>
+        <th>Labour %</th>
+        <th>Material %</th>
+        <th>Admin Exp</th>
+        <th>Pending Payments <span class="info-tip">i<span class="tip-text">Wages due but not yet paid\nto workers</span></span></th>
+        <th>GPs</th>
+    </tr></thead><tbody>`;
+    years.forEach(y=>{
+        h+=`<tr id="bs-yr-row-${y.year.replace(/[^a-zA-Z0-9]/g,'')}">
+            <td><strong>${y.year}</strong></td>
+            <td>${CL(y.total_released)} ${yoyBadge(y.yoy_released)}</td>
+            <td>${CL(y.total_utilisation)} ${yoyBadge(y.yoy_utilisation)}</td>
+            <td style="color:${y.balance>0?'var(--warning)':'var(--success)'};font-weight:700">${CL(y.balance)} ${yoyBadge(y.yoy_balance,'',true)}</td>
+            <td style="font-weight:800;color:${y.utilisation_pct>=80?'var(--success)':y.utilisation_pct>=60?'var(--warning)':'var(--danger)'}">${y.utilisation_pct}% ${yoyBadge(y.yoy_utilisation_pct,'%')}</td>
+            <td style="color:${y.wage_pct>=60?'var(--success)':'var(--danger)'};font-weight:700">${y.wage_pct}%</td>
+            <td style="color:${y.material_pct<=40?'var(--success)':'var(--danger)'};font-weight:700">${y.material_pct}%</td>
+            <td>${CL(y.admin_exp)}</td>
+            <td style="color:var(--warning)">${CL(y.pending_payments)}</td>
+            <td>${y.gp_count}</td>
+        </tr>`;
+    });
+    h+=`</tbody></table></div></div></div>`;
+
+    // === Charts section ===
+    h+=`<div id="bs-charts"></div>`;
+
+    // === Block table placeholder ===
+    h+=`<div id="bs-blocks"></div>`;
+
+    el.innerHTML=h;
+    bsYearChanged(); // render for default year
+}
+
+function bsYearChanged(){
+    if(!_bsData)return;
+    const yr=$('bs-yr').value;
+    const years=_bsData.years;
+    const sel=years.find(y=>y.year===yr)||years[years.length-1];
+
+    // Highlight selected row
+    years.forEach(y=>{
+        const row=$('bs-yr-row-'+y.year.replace(/[^a-zA-Z0-9]/g,''));
+        if(row) row.style.background=y.year===yr?'#fff3e0':'';
+    });
+
+    // Update stats bar
+    $('bs-stats').innerHTML=`<div class="stats-bar">
+        <div class="sc mg"><div class="lb">Total Released (${yr})</div><div class="vl">${CL(sel.total_released)}</div></div>
+        <div class="sc s"><div class="lb">Total Utilisation</div><div class="vl">${CL(sel.total_utilisation)}</div></div>
+        <div class="sc ${sel.balance>0?'w':'s'}"><div class="lb">Balance / Unspent</div><div class="vl">${CL(sel.balance)}</div></div>
+        <div class="sc i"><div class="lb">Utilisation %</div><div class="vl">${sel.utilisation_pct}%</div></div>
+        <div class="sc"><div class="lb">Labour : Material</div><div class="vl">${sel.wage_pct}% : ${sel.material_pct}%</div></div>
+        <div class="sc a"><div class="lb">GPs Covered</div><div class="vl">${sel.gp_count}</div></div>
+    </div>`;
+
+    // Render charts
+    renderBSCharts(yr);
+
+    // Render blocks table for selected year
+    renderBSBlockTable(yr);
+}
+
+function renderBSCharts(yr){
+    destroyBSCharts();
+    const data=_bsData;
+    const blocks=data.blocks_by_year[yr]||[];
+    const yearKeys=Object.keys(data.blocks_by_year).sort();
+    const labels=blocks.map(b=>b.block);
+
+    let h=`<div class="chart-grid">`;
+
+    // Chart 1: Released vs Utilised per block
+    h+=`<div class="chart-card"><h4>Released vs Utilised — ${yr}</h4><div style="height:320px"><canvas id="ch-rel-util"></canvas></div></div>`;
+
+    // Chart 2: Utilisation % per block (bar)
+    h+=`<div class="chart-card"><h4>Block Utilisation % — ${yr}</h4><div style="height:320px"><canvas id="ch-util-pct"></canvas></div></div>`;
+
+    // Chart 3: Labour vs Material split per block (stacked)
+    h+=`<div class="chart-card"><h4>Labour vs Material Split — ${yr}</h4><div style="height:320px"><canvas id="ch-lm-split"></canvas></div></div>`;
+
+    // Chart 4: Year-wise comparison (if multi-year) OR Fund distribution pie
+    if(yearKeys.length>1){
+        h+=`<div class="chart-card"><h4>Year-over-Year: Released Funds Comparison</h4><div style="height:320px"><canvas id="ch-yoy"></canvas></div></div>`;
+    } else {
+        h+=`<div class="chart-card"><h4>Fund Distribution — ${yr}</h4><div style="height:320px"><canvas id="ch-fund-pie"></canvas></div></div>`;
+    }
+
+    h+=`</div>`;
+    $('bs-charts').innerHTML=h;
+
+    // === Draw charts ===
+    const chartFont={family:"'Segoe UI',system-ui,sans-serif"};
+    const tooltipCb={label:ctx=>{
+        const v=ctx.parsed.x!==undefined?ctx.parsed.x:ctx.parsed.y;
+        return ctx.dataset.label+': ₹'+Number(v).toLocaleString('en-IN',{minimumFractionDigits:2})+' L';
+    }};
+
+    // Chart 1: Released vs Utilised
+    _bsCharts.relUtil=new Chart($('ch-rel-util'),{
+        type:'bar',
+        data:{
+            labels,
+            datasets:[
+                {label:'Released',data:blocks.map(b=>b.total_released),backgroundColor:'rgba(25,118,210,0.7)',borderRadius:4},
+                {label:'Utilised',data:blocks.map(b=>b.total_utilisation),backgroundColor:'rgba(230,81,0,0.7)',borderRadius:4}
+            ]
+        },
+        options:{
+            indexAxis:'y',responsive:true,maintainAspectRatio:false,
+            plugins:{legend:{position:'top',labels:{font:chartFont}},tooltip:{callbacks:tooltipCb}},
+            scales:{x:{ticks:{callback:v=>'₹'+v+'L',font:chartFont},grid:{display:false}},y:{ticks:{font:{...chartFont,size:11}}}}
+        }
+    });
+
+    // Chart 2: Utilisation % bar
+    const utilColors=blocks.map(b=>b.utilisation_pct>=100?'rgba(46,125,50,0.75)':b.utilisation_pct>=80?'rgba(245,127,23,0.75)':'rgba(198,40,40,0.75)');
+    _bsCharts.utilPct=new Chart($('ch-util-pct'),{
+        type:'bar',
+        data:{
+            labels,
+            datasets:[{label:'Utilisation %',data:blocks.map(b=>b.utilisation_pct),backgroundColor:utilColors,borderRadius:4}]
+        },
+        options:{
+            responsive:true,maintainAspectRatio:false,
+            plugins:{
+                legend:{display:false},
+                tooltip:{callbacks:{label:ctx=>ctx.parsed.y+'%'}}
+            },
+            scales:{
+                y:{min:90,ticks:{callback:v=>v+'%',font:chartFont},grid:{display:false}},
+                x:{ticks:{font:{...chartFont,size:11}}}
+            }
+        }
+    });
+
+    // Chart 3: Labour vs Material stacked
+    _bsCharts.lmSplit=new Chart($('ch-lm-split'),{
+        type:'bar',
+        data:{
+            labels,
+            datasets:[
+                {label:'Labour',data:blocks.map(b=>b.wage_amount),backgroundColor:'rgba(25,118,210,0.75)',borderRadius:2},
+                {label:'Material',data:blocks.map(b=>b.material_amount),backgroundColor:'rgba(255,152,0,0.75)',borderRadius:2}
+            ]
+        },
+        options:{
+            responsive:true,maintainAspectRatio:false,
+            plugins:{legend:{position:'top',labels:{font:chartFont}},tooltip:{callbacks:tooltipCb}},
+            scales:{x:{stacked:true,ticks:{font:{...chartFont,size:11}}},y:{stacked:true,ticks:{callback:v=>'₹'+v+'L',font:chartFont},grid:{display:false}}}
+        }
+    });
+
+    // Chart 4: YoY or Pie
+    if(yearKeys.length>1){
+        const datasets=yearKeys.map((yk,i)=>{
+            const yBlocks=data.blocks_by_year[yk]||[];
+            const map={};yBlocks.forEach(b=>map[b.block]=b.total_released);
+            const colors=['rgba(25,118,210,0.7)','rgba(230,81,0,0.7)','rgba(46,125,50,0.7)','rgba(156,39,176,0.7)'];
+            return {label:yk,data:labels.map(l=>map[l]||0),backgroundColor:colors[i%colors.length],borderRadius:4};
+        });
+        _bsCharts.yoy=new Chart($('ch-yoy'),{
+            type:'bar',
+            data:{labels,datasets},
+            options:{
+                responsive:true,maintainAspectRatio:false,
+                plugins:{legend:{position:'top',labels:{font:chartFont}},tooltip:{callbacks:tooltipCb}},
+                scales:{x:{ticks:{font:{...chartFont,size:11}}},y:{ticks:{callback:v=>'₹'+v+'L',font:chartFont},grid:{display:false}}}
+            }
+        });
+    } else {
+        const sel=data.years.find(y=>y.year===yr)||data.years[0];
+        _bsCharts.pie=new Chart($('ch-fund-pie'),{
+            type:'doughnut',
+            data:{
+                labels:['Labour','Material','Admin','Pending'],
+                datasets:[{data:[sel.wage_amount,sel.material_amount,sel.admin_exp,sel.pending_payments],backgroundColor:['rgba(25,118,210,0.8)','rgba(255,152,0,0.8)','rgba(156,39,176,0.8)','rgba(245,127,23,0.8)'],borderWidth:2,borderColor:'#fff'}]
+            },
+            options:{
+                responsive:true,maintainAspectRatio:false,
+                plugins:{legend:{position:'right',labels:{font:chartFont,padding:12}},tooltip:{callbacks:{label:ctx=>{const v=ctx.parsed;return ctx.label+': ₹'+Number(v).toLocaleString('en-IN',{minimumFractionDigits:2})+' L'}}}}
+            }
+        });
+    }
+}
+
+function renderBSBlockTable(yr){
+    const data=_bsData;
+    const blocks=data.blocks_by_year[yr]||[];
+    const yearKeys=Object.keys(data.blocks_by_year).sort();
+    let h='';
+
+    h+=`<div class="bs-section"><h4><span style="color:#e65100">&#9654;</span> Block-wise Balance Sheet — ${yr}</h4>`;
+    h+=`<div class="tw"><div class="ts"><table><thead class="th-i"><tr>
+        <th>Block</th><th>Total Released</th><th>Total Utilisation</th><th>Balance</th><th>Utilisation %</th><th>Labour Amount</th><th>Material Amount</th>`;
+    // Add previous year columns if available
+    const prevYrs=yearKeys.filter(y=>y!==yr);
+    if(prevYrs.length>0){
+        const py=prevYrs[prevYrs.length-1];
+        h+=`<th>Util % (${py})</th><th>Change</th>`;
+    }
+    h+=`</tr></thead><tbody>`;
+
+    // Build previous year map
+    let prevMap={};
+    if(prevYrs.length>0){
+        const py=prevYrs[prevYrs.length-1];
+        (data.blocks_by_year[py]||[]).forEach(b=>prevMap[b.block]=b);
+    }
+
+    blocks.forEach(b=>{
+        const p=prevMap[b.block]||{};
+        const diff=p.utilisation_pct!=null?round2(b.utilisation_pct-p.utilisation_pct):null;
+        h+=`<tr style="cursor:pointer" onclick="drillToBlockBS('${b.block.replace(/'/g,"\\\\'")}')">
+            <td><strong>${b.block}</strong></td>
+            <td>${CL(b.total_released)}</td>
+            <td>${CL(b.total_utilisation)}</td>
+            <td style="color:${b.balance>0?'var(--warning)':'var(--success)'};font-weight:700">${CL(b.balance)}</td>
+            <td style="font-weight:800;color:${b.utilisation_pct>=80?'var(--success)':b.utilisation_pct>=60?'var(--warning)':'var(--danger)'}">${b.utilisation_pct}%</td>
+            <td>${CL(b.wage_amount)}</td>
+            <td>${CL(b.material_amount)}</td>`;
+        if(prevYrs.length>0){
+            h+=`<td>${p.utilisation_pct!=null?p.utilisation_pct+'%':'—'}</td>`;
+            h+=`<td>${diff!==null?yoyBadge(diff,'%'):''}</td>`;
+        }
+        h+=`</tr>`;
+    });
+    h+=`</tbody></table></div></div>`;
+    h+=`<div style="font-size:.75rem;color:var(--text-light);margin-top:.5rem">Click any block row to drill down to Gram Panchayat level →</div>`;
+    h+=`</div>`;
+
+    $('bs-blocks').innerHTML=h;
+}
+
+function round2(n){return Math.round(n*100)/100}
+
+async function drillToBlockBS(block){
+    const el=$('mg-res');loading(el);
+    const data=await F('/api/mgnrega/balance_sheet_block?block='+encodeURIComponent(block));
+    renderBlockBalanceSheet(data);
+}
+
+function renderBlockBalanceSheet(d){
+    const el=$('mg-res');
+    const distName=mgState.district||'District';
+    const bs=d.block_summary||{};
+
+    let h=`<div class="breadcrumb"><a onclick="loadBalanceSheet()">${distName}</a> <span>›</span> <strong>${d.block}</strong> &mdash; GP Balance Sheet</div>`;
+
+    // Block-level summary stats
+    h+=`<div class="stats-bar">
+        <div class="sc mg"><div class="lb">Total Released</div><div class="vl">${CL(bs.total_released)}</div></div>
+        <div class="sc s"><div class="lb">Total Utilisation</div><div class="vl">${CL(bs.total_utilisation)}</div></div>
+        <div class="sc ${(bs.balance||0)>0?'w':'s'}"><div class="lb">Balance / Unspent</div><div class="vl">${CL(bs.balance)}</div></div>
+        <div class="sc i"><div class="lb">Utilisation %</div><div class="vl">${bs.utilisation_pct||0}%</div></div>
+        <div class="sc"><div class="lb">Labour : Material</div><div class="vl">${bs.wage_pct||0}% : ${bs.material_pct||0}%</div></div>
+        <div class="sc a"><div class="lb">Total GPs</div><div class="vl">${d.total_gps}</div></div>
+    </div>`;
+
+    // GP detail table
+    h+=`<div class="bs-section"><h4><span style="color:#e65100">&#9654;</span> GP-wise Balance Sheet — ${d.block}</h4>`;
+    h+=`<div class="tw"><div class="ts"><table><thead class="th-i"><tr>
+        <th>Gram Panchayat</th>
+        <th>Total Released <span class="info-tip">i<span class="tip-text">Total funds made available\n(Opening Balance + Received)</span></span></th>
+        <th>Total Utilisation <span class="info-tip">i<span class="tip-text">Total expenditure incurred\n(Labour + Material + Admin)</span></span></th>
+        <th>Balance <span class="info-tip">i<span class="tip-text">Released − Utilisation\nFunds remaining unspent</span></span></th>
+        <th>Utilisation %</th>
+        <th>Labour Amount</th>
+        <th>Material Amount</th>
+        <th>Admin Exp</th>
+        <th>Pending Payments <span class="info-tip">i<span class="tip-text">Wages due but not yet paid\nto workers</span></span></th>
+    </tr></thead><tbody>`;
+    d.gps.forEach(g=>{
+        const overSpent=g.balance<0;
+        h+=`<tr>
+            <td><strong>${g.panchayat}</strong></td>
+            <td>${CL(g.total_released)}</td>
+            <td>${CL(g.total_utilisation)}</td>
+            <td style="color:${g.balance>0?'var(--warning)':g.balance<0?'var(--success)':'var(--text)'};font-weight:700">${CL(g.balance)}</td>
+            <td style="font-weight:800;color:${g.utilisation_pct>=80?'var(--success)':g.utilisation_pct>=60?'var(--warning)':'var(--danger)'}">${g.utilisation_pct}%</td>
+            <td>${CL(g.wage_amount)}</td>
+            <td>${CL(g.material_amount)}</td>
+            <td>${CL(g.admin_exp)}</td>
+            <td style="color:var(--warning)">${CL(g.pending_payments)}</td>
+        </tr>`;
+    });
+    h+=`</tbody></table></div></div></div>`;
+    el.innerHTML=h;
+}
+
+/* ═══ INIT ═══ */
+initE();initP();initM();initA();
+</script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+# Environment
+.env
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# SQLite databases
+*.db
+*.sqlite
+*.sqlite3
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Logs
+*.log
+nohup.out
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Data files (large CSVs — kept locally, not in repo)
+*.csv
