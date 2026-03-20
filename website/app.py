@@ -1,33 +1,69 @@
 """
-Flask backend for the Audit Dashboard.
-All data served from MongoDB Atlas (migrated from SQLite).
+Audit Dashboard — Flask API
+Backend serving property and MGNREGA audit data from MongoDB Atlas.
+
+Production deployment:
+    gunicorn -w 4 -b 0.0.0.0:5001 app:app
+
+Development:
+    python app.py
 """
 
-from flask import Flask, jsonify, request, send_from_directory
-from pymongo import MongoClient, ASCENDING, DESCENDING
-from dotenv import load_dotenv
+import logging
 import os
+import threading
+import time
 
+from dotenv import load_dotenv
+from flask import Flask, g, jsonify, request, send_from_directory
+from pymongo import MongoClient, ASCENDING, DESCENDING
+from pymongo.errors import ConnectionFailure, OperationFailure, PyMongoError
+from werkzeug.middleware.proxy_fix import ProxyFix
+
+# ─── Environment ──────────────────────────────────────────────────────────────
 load_dotenv()
 
+# ─── Logging ──────────────────────────────────────────────────────────────────
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s — %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+log = logging.getLogger("audit")
+
+# ─── App factory ──────────────────────────────────────────────────────────────
 app = Flask(__name__, static_folder="static")
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1)
 
-from werkzeug.middleware.proxy_fix import ProxyFix
-app.wsgi_app = ProxyFix(app.wsgi_app)
-
-# ─── MongoDB connection (lazy singleton) ──────────────────────────────────────
-_client = None
+# ─── MongoDB — thread-safe lazy singleton ─────────────────────────────────────
+_client: MongoClient | None = None
 _db = None
+_mongo_lock = threading.Lock()
+
+_MONGO_URI = os.environ.get("MONGODB_URI", "")
+if not _MONGO_URI:
+    raise RuntimeError("MONGODB_URI is not set. Add it to website/.env")
 
 
 def get_db():
+    """Return the MongoDB database, initialising the client once."""
     global _client, _db
     if _db is None:
-        uri = os.environ.get("MONGODB_URI")
-        if not uri:
-            raise RuntimeError("MONGODB_URI not set in .env")
-        _client = MongoClient(uri, serverSelectionTimeoutMS=10000)
-        _db = _client["Audit"]
+        with _mongo_lock:
+            if _db is None:          # double-checked locking
+                log.info("Connecting to MongoDB Atlas …")
+                _client = MongoClient(
+                    _MONGO_URI,
+                    serverSelectionTimeoutMS=10_000,
+                    connectTimeoutMS=10_000,
+                    socketTimeoutMS=30_000,
+                    maxPoolSize=20,
+                    retryWrites=True,
+                )
+                # Eagerly verify connectivity at startup
+                _client.admin.command("ping")
+                _db = _client["Audit"]
+                log.info("MongoDB connected — database: Audit")
     return _db
 
 
@@ -41,6 +77,74 @@ def col_panch():
 
 def col_mg():
     return get_db()["mgnrega"]
+
+
+# ─── Helpers ──────────────────────────────────────────────────────────────────
+MAX_LIMIT = 1_000  # hard cap on page size
+
+
+def _int(value, default: int, lo: int = 0, hi: int = MAX_LIMIT) -> int:
+    """Parse an integer query parameter with a clamped range."""
+    try:
+        return max(lo, min(hi, int(value)))
+    except (TypeError, ValueError):
+        return default
+
+
+# ─── Request lifecycle — logging & timing ─────────────────────────────────────
+@app.before_request
+def _start_timer():
+    g.t0 = time.perf_counter()
+
+
+@app.after_request
+def _log_request(response):
+    ms = round((time.perf_counter() - g.t0) * 1000)
+    log.info("%s %s → %s  (%dms)", request.method, request.path, response.status_code, ms)
+    # Security headers
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    return response
+
+
+# ─── Error handlers ───────────────────────────────────────────────────────────
+@app.errorhandler(400)
+def bad_request(err):
+    return jsonify({"error": "Bad request", "detail": str(err)}), 400
+
+
+@app.errorhandler(404)
+def not_found(err):
+    return jsonify({"error": "Endpoint not found"}), 404
+
+
+@app.errorhandler(405)
+def method_not_allowed(err):
+    return jsonify({"error": "Method not allowed"}), 405
+
+
+@app.errorhandler(PyMongoError)
+def mongo_error(err):
+    log.exception("MongoDB error on %s %s", request.method, request.path)
+    return jsonify({"error": "Database error", "detail": str(err)}), 503
+
+
+@app.errorhandler(Exception)
+def unhandled(err):
+    log.exception("Unhandled error on %s %s", request.method, request.path)
+    return jsonify({"error": "Internal server error"}), 500
+
+
+# ─── Health check ────────────────────────────────────────────────────────────
+@app.route("/api/health")
+def health():
+    try:
+        get_db().client.admin.command("ping")
+        return jsonify({"status": "ok", "db": "connected"})
+    except (ConnectionFailure, OperationFailure) as exc:
+        log.error("Health check failed: %s", exc)
+        return jsonify({"status": "error", "db": "unreachable"}), 503
 
 
 # ─── Serve frontend ───────────────────────────────────────────────────────────
@@ -73,8 +177,8 @@ def eswathu_data():
     district = request.args.get("district", "")
     taluk = request.args.get("taluk", "")
     gp = request.args.get("gp", "")
-    limit = int(request.args.get("limit", 500))
-    offset = int(request.args.get("offset", 0))
+    limit = _int(request.args.get("limit"), 500)
+    offset = _int(request.args.get("offset"), 0, hi=10_000_000)
     flt = {"district": district, "taluk": taluk, "gp": gp}
     proj = {"_id": 0, "property_id": 1, "asset_number": 1,
             "property_classification": 1, "owners": 1, "form_type": 1}
@@ -118,8 +222,8 @@ def panch_data():
     taluk = request.args.get("taluk", "")
     gp = request.args.get("gp", "")
     village = request.args.get("village", "")
-    limit = int(request.args.get("limit", 500))
-    offset = int(request.args.get("offset", 0))
+    limit = _int(request.args.get("limit"), 500)
+    offset = _int(request.args.get("offset"), 0, hi=10_000_000)
     flt = {"district": district, "taluk": taluk, "gp": gp}
     if village:
         flt["village_code"] = village
@@ -138,8 +242,8 @@ def match_properties():
     district = request.args.get("district", "")
     taluk = request.args.get("taluk", "")
     gp = request.args.get("gp", "")
-    limit = int(request.args.get("limit", 500))
-    offset = int(request.args.get("offset", 0))
+    limit = _int(request.args.get("limit"), 500)
+    offset = _int(request.args.get("offset"), 0, hi=10_000_000)
     flt = {"district": district, "taluk": taluk, "gp": gp}
 
     esw_docs = list(col_esw().find(flt, {
@@ -191,8 +295,8 @@ def missing_properties():
     taluk = request.args.get("taluk", "")
     gp = request.args.get("gp", "")
     source = request.args.get("source", "eswathu")
-    limit = int(request.args.get("limit", 500))
-    offset = int(request.args.get("offset", 0))
+    limit = _int(request.args.get("limit"), 500)
+    offset = _int(request.args.get("offset"), 0, hi=10_000_000)
     flt = {"district": district, "taluk": taluk, "gp": gp}
 
     if source == "eswathu":
@@ -655,8 +759,8 @@ def analytics_defaulters():
     district = request.args.get("district", "")
     taluk = request.args.get("taluk", "")
     gp = request.args.get("gp", "")
-    limit = int(request.args.get("limit", 50))
-    offset = int(request.args.get("offset", 0))
+    limit = _int(request.args.get("limit"), 50)
+    offset = _int(request.args.get("offset"), 0, hi=10_000_000)
     flt = {"district": district, "taluk": taluk, "gp": gp, "arrears": {"$gt": 0}}
     proj = {"_id": 0, "property_id": 1, "property_number": 1, "property_owner_name": 1,
             "village_code": 1, "arrears": 1, "total_demand": 1,
@@ -668,6 +772,9 @@ def analytics_defaulters():
 
 
 if __name__ == "__main__":
-    print("Starting Audit Dashboard — MongoDB backend")
-    print("Server: http://localhost:5001")
-    app.run(debug=True, port=5001)
+    # Development only — use gunicorn for production:
+    #   gunicorn -w 4 -b 0.0.0.0:5001 app:app
+    port = int(os.environ.get("PORT", 5001))
+    debug = os.environ.get("FLASK_DEBUG", "0") == "1"
+    log.info("Starting Audit Dashboard (dev server) on port %d", port)
+    app.run(host="0.0.0.0", port=port, debug=debug)
