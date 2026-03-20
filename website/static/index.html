@@ -211,7 +211,9 @@ tr:hover td{background:#f8f9ff}tr:nth-child(even) td{background:#fafafa}tr:nth-c
 </footer>
 <script>
 const $=id=>document.getElementById(id);
-const F=async u=>(await fetch(u)).json();
+const BASE = window.location.pathname.startsWith('/audit') ? '/audit' : '';
+
+const F = async (u) => (await fetch(BASE + u)).json();
 function pop(sel,items,ph){sel.innerHTML=`<option value="">${ph}</option>`;items.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;sel.appendChild(o)});sel.disabled=false}
 const N=n=>Number(n||0).toLocaleString('en-IN');
 const C=n=>'₹'+Number(n||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
