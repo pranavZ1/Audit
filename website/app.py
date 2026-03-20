@@ -12,6 +12,9 @@ load_dotenv()
 
 app = Flask(__name__, static_folder="static")
 
+from werkzeug.middleware.proxy_fix import ProxyFix
+app.wsgi_app = ProxyFix(app.wsgi_app)
+
 # ─── MongoDB connection (lazy singleton) ──────────────────────────────────────
 _client = None
 _db = None
